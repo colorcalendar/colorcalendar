@@ -2,11 +2,23 @@
 <meta charset=utf-8>
 <html lang=en>
 
-<head>
+<head></head>
+
+<style>
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  font-size: xx-large;
+}
+</style>
 
 <title>Color Calendar </title>
 
-<body onload="getColorDate()"><div id="color-date"></div></body>
+<body onload="getColorDate()"><div class="container"><div id="color-date"></div></div></body>
 
 <script src="color-calendar.js"></script>
 
