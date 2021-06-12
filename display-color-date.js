@@ -1,4 +1,4 @@
- // Displays Color Calendar date in div
+// Displays Color Calendar date in div
 // Global varibles set in color-calendar.js
 
 function displayColorDate() {
