@@ -19,3 +19,18 @@ function displayColorDate() {
             " " + colorMonthDay + ", " + colorDay;
     }
 }
+
+
+// Set size of font based on screen size
+if (window.innerHeight < window.innerWidth){
+
+// If height is less than width, set for height
+var d = document.getElementById('color-date');
+d.style.fontSize = window.innerHeight/9+'px';
+}else{
+
+// else set for width
+var d = document.getElementById('color-date');
+d.style.fontSize = window.innerWidth/15+'px';
+};
+
