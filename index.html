@@ -2,24 +2,14 @@
 <meta charset=utf-8>
 <html lang=en>
 
-<head></head>
-
-<style>
-.container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-  font-size: xx-large;
-}
-</style>
+<head><link rel="stylesheet" href="layout.css"></head>
 
 <title>Color Calendar </title>
 
-<body onload="getColorDate()"><div class="container"><div id="color-date"></div></div></body>
+<body onload="getColorDate(); setBackgroundColor(); displayColorDate()" >
+<div class="color-date-container"><div id="color-date"></div></div></body>
 
 <script src="color-calendar.js"></script>
-
+<script src="set-background-color.js"></script>
+<script src="display-color-date.js"></script>
 </html>
