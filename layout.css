@@ -16,4 +16,11 @@ body {
         margin-right: -50%;
         transform: translate(-50%, -50%) 
 }
-/* cache testing */
+
+#toolbar {
+  overflow: hidden;
+        background: black;
+        color: white;
+  font-size: 17px;
+}
+/* cache testing on ipfs */
