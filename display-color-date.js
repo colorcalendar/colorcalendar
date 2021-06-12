@@ -1,4 +1,5 @@
  // Displays Color Calendar date in div
+// Global varibles set in color-calendar.js
 
 function displayColorDate() {
 		
@@ -15,6 +16,6 @@ function displayColorDate() {
 
    // Else display the current Color Calendar date 
     else {document.getElementById("color-date").textContent = "Year " + colorYear + ", " + colorMonth +
-            " " + colorMonthDay + ", " + window.colorDay;
+            " " + colorMonthDay + ", " + colorDay;
     }
 }
