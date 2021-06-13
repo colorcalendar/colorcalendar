@@ -1,4 +1,4 @@
-// Sets a random username and stores it in localStorage
+// Sets a random username and stores it in localStorage and counts repeat visits
 try {
     // Check if local storage is enabled
     if (window.localStorage) {
@@ -99,13 +99,12 @@ function populateLocalStorage() {
 
 function setVisitorCount() {
 
-
-    // Date object
+    // Date object, time
     var localStorageTime = new Date();
     var pageCountTime = localStorageTime.getTime()
 
+    // local storage, last page visit time
     var lastPageTime = localStorage.getItem("local-time");
-
     localStorage.setItem('local-time', pageCountTime);
 
     //Add to counter
@@ -113,25 +112,31 @@ function setVisitorCount() {
     var addAPageView = ++currentPageView;
     localStorage.setItem('visitor-count', currentPageView);
 
-    // Format the seconds and minutes to 1 decimal
+    // Format so there are no decimal points
     var secondsSinceVisit = (pageCountTime - lastPageTime) / 1000;
-    var secondsSinceVisitFixed = Number.parseFloat(secondsSinceVisit).toFixed(1);
-    var minutesSinceVisit = Number.parseFloat(secondsSinceVisit / 60).toFixed(1);
+    var secondsSinceVisitFixed = Number.parseFloat(secondsSinceVisit).toFixed(0);
+    var minutesSinceVisit = Number.parseFloat(secondsSinceVisit / 60).toFixed(0);
 
-    if (secondsSinceVisit < 60) {
-        // seconds
-        document.getElementById('toolbar').textContent =
-            "Welcome back " + localStorage.getItem("user-name") +
-            ". This is visit number " + currentPageView +
-            ". It's been " + secondsSinceVisitFixed +
-            " seconds since lasting visiting us from " + localStorage.getItem("user-location");
-    } else
-    // minutes
-    {
-        document.getElementById('toolbar').textContent =
-            "Welcome back " + localStorage.getItem("user-name") +
-            ". This is visit number " + currentPageView +
-            ". It's been " + minutesSinceVisit +
-            " minutes since lasting visiting us from " + localStorage.getItem("user-location");
+    // Format based on seconds, minutes
+    var grammarForTime = "";
+    if (secondsSinceVisitFixed < 2 && secondsSinceVisitFixed >= 1) {
+        // the grammar is 1 second, not 1 seconds
+         grammarForTime= secondsSinceVisitFixed + " second";
+    } 
+   else if (secondsSinceVisitFixed < 60 || (secondsSinceVisitFixed > 0 && secondsSinceVisitFixed <1) ) {
+       grammarForTime= secondsSinceVisitFixed +  " seconds";
+    } 
+   else if (secondsSinceVisitFixed > 60 && secondsSinceVisitFixed < 120 ) {
+      grammarForTime= minutesSinceVisit + " minutes";
     }
+   else if (secondsSinceVisitFixed >= 120 ) {
+      grammarForTime= minutesSinceVisit + " minutes";
+    }
+        
+// Display in browser
+document.getElementById('toolbar').textContent =
+            "Welcome back " + localStorage.getItem("user-name") +
+            ". This is visit number " + currentPageView +
+            ". It's been " +  grammarForTime +
+            " since lasting visiting us from " + localStorage.getItem("user-location");
 }
