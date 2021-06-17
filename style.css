@@ -1,26 +1,33 @@
-body {
-	background: white;
-        margin: 0;
-	text-align: center;
-	font-family: 'Roboto', sans-serif;
- }
+/* Styles for Color Calendar */
 
-#color-date {
-        background: black;
-        color: white;
-        border-radius: 0.5em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%) 
+body {
+	margin : 0;
+	padding: 0;
+	background: white;
+	text-align: center;
+	font-family: sans-serif;
+}
+table {
+	width: 600px;
+	height: 400px;
+	margin: 50px auto;
+	border-collapse: collapse;
+	background: WhiteSmoke;
+}
+
+.days {
+	background: #fff;
+	width: 100px;
+	font: 1em/1em arial;
+	color: black;
+	text-align: center;
+
 }
 
 #toolbar {
-  overflow: hidden;
-        background: black;
-        color: white;
-  font-size: 17px;
+	overflow: hidden;
+	background: black;
+	color: white;
+	padding: 1em;
+	font-size: 15px;
 }
-/* cache testing on ipfs */
