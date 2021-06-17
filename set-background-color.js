@@ -3,23 +3,44 @@
 
 function setBackgroundColor() {
 
-	  // Set background based on day color
+	var currentNumber = window.colorMonthDay;
+
+	  // Set background color based on day color
 	    if (colorDay == "Redday") {
-		document.body.style.backgroundColor = "red";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="red";
+		    }
 	    }
 	    if (colorDay == "Orangeday") {
-		document.body.style.backgroundColor = "orange";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="orange";
+		    }
 	    }
 	    if (colorDay == "Yellowday") {
-		document.body.style.backgroundColor = "yellow";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="yellow";
+		    }
 	    }
 	    if (colorDay == "Greenday") {
-		document.body.style.backgroundColor = "green";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="green";
+		    }
 	    }
 	    if (colorDay == "Blueday") {
-		document.body.style.backgroundColor = "blue";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="blue";
+		    }
 	    }
 	    if (colorDay == "Violetday") {
-		document.body.style.backgroundColor = "purple";
+		//document.body.style.backgroundColor = "purple";
+		    elements = document.getElementsByClassName("d"+currentNumber);
+		    for (var i = 0; i < elements.length; i++) {
+			elements[i].bgColor="purple";
+		    }
 	    }   
 }
