@@ -1,142 +1,95 @@
-// Sets a random username and stores it in localStorage and counts repeat visits
-try {
-    // Check if local storage is enabled
-    if (window.localStorage) {
+//  localStorage, sets username and visitor count
 
-        // Check if localStorage has existing visitor-count
-        if (!localStorage.getItem('visitor-count')) {
-            populateLocalStorage(); // populate if it's the first visit
-        } else {
-            setVisitorCount(); // if it's repeat visit add to counter
-        }
+try {
+    // Check if visitor count exist
+    if (!localStorage.getItem('ColorCalendar.eth.visits')) {
+        setFirstUser(); // populate if first visit
     } else {
-        document.getElementById('toolbar').textContent = "Local Storage Disabled";
+        setVisitorCount();
     }
 } catch (e) {
     // Statement to handle errors
-    document.getElementById('toolbar').textContent = "Unknown error";
+    document.getElementById('toolbar').textContent = "Error. Local Storage Disabled";
 }
 
+function setFirstUser() {
 
-function populateLocalStorage() {
-
-    // Arrays to randomly mix together
-    var colorArray = ['Blue',
-        'Red',
-        'Green',
-        'Yellow',
-        'Orange',
-        'Purple'
-    ];
-
-    var emotionArray = ['Ticklish',
-        'Thoughtful',
-        'Loving',
-        'Happy',
-        'Playful',
-        'Comforting',
-        'Singing',
-        'Greatful',
-        'Humorous',
-        'Forgiving',
-        'Brave',
-        'Curious'
-    ];
-
-    var animalArray = ['Elephant',
-        'Rhino',
-        'Shark',
-        'Dragonfly',
-        'Owl',
-        'Bear',
-        'Grasshopper',
-        'Lion',
-        'Dolphin',
-        'Eagle',
-        'Rooster',
-        'Raven'
-    ];
-
-    var locationArray = ['Sirius',
-        'Canopus',
-        'Arcturus',
-        'Rigil Kentaurus',
-        'Vega',
-        'Capella',
-        'Rigel',
-        'Procyon',
-        'Achernar',
-        'Betelgeuse',
-        'Hadar',
-        'Altair'
-    ];
+    // Arrays to randomly mix visitor names together
+    var colorArray = ["Blue", "Red", "Green", "Yellow", "Orange", "Purple"];
+    var emotionArray = ["Ticklish", "Thoughtful", "Loving", "Happy", "Playful", "Comforting", "Singing", "Greatful", "Humorous", "Forgiving", "Brave", "Curious"];
+    var animalArray = ["Elephant", "Rhino", "Shark", "Dragonfly", "Owl", "Bear", "Grasshopper", "Lion", "Dolphin", "Eagle","Rooster", "Raven"];
+    var starArray = ["Sirius", "Canopus", "Arcturus", "Rigil Kentaurus", "Vega", "Capella", "Rigel", "Procyon", "Achernar", "Betelgeuse", "Hadar", "Altair"];
 
     // Assign random values from arrays
-    var randomEmotion = emotionArray[Math.floor(Math.random() * emotionArray.length)];
-    var randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
-    var randomAnimal = animalArray[Math.floor(Math.random() * animalArray.length)];
-    var randomLocation = locationArray[Math.floor(Math.random() * locationArray.length)];
+    var userEmotion = emotionArray[Math.floor(Math.random() * emotionArray.length)];
+    var userColor = colorArray[Math.floor(Math.random() * colorArray.length)];
+    var userAnimal = animalArray[Math.floor(Math.random() * animalArray.length)];
+    var userStar = starArray[Math.floor(Math.random() * starArray.length)];
 
-    // Concatenate random values from arrays
-    var uniqueUserName = randomEmotion.concat(' ' + randomColor, ' ' + randomAnimal);
+    // Concatenate into username
+    var emotionColorAnimal = userEmotion.concat(' ' + userColor, ' ' + userAnimal);
 
-    // Welcome message
-    var welcomeMessage = 'Welcome visitor, you shall be known as the: ' + " " +
-        uniqueUserName + " " + ' from ' + " " + randomLocation;
+    // Date object in seconds
+    var newDateObject = new Date();
+    var firstVisitTimestamp = newDateObject.getTime()
 
-    // Date object
-    var localStorageTime = new Date();
-    var pageCountTime = localStorageTime.getTime()
+    // Format as JSON
+    const newUserName = {
+        name: emotionColorAnimal,
+        location: userStar,
+        firstvisit: firstVisitTimestamp
+    };
+    const usernameJSON = JSON.stringify(newUserName);
 
-    localStorage.setItem('local-time', pageCountTime);
-    localStorage.setItem('user-name', uniqueUserName);
-    localStorage.setItem('user-location', randomLocation);
-    localStorage.setItem('visitor-count', "1");
-    var currentPageView = localStorage.getItem("visitor-count");
+    // Set localstorage
+    localStorage.setItem('ColorCalendar.eth', usernameJSON);
+    localStorage.setItem('ColorCalendar.eth.visits', "1");
+    localStorage.setItem('ColorCalendar.eth.lastdate', firstVisitTimestamp);
 
-    document.getElementById('toolbar').textContent = welcomeMessage;
+    // Display in browser
+    document.getElementById('toolbar').textContent = "Welcome visitor, you shall be known as the: " + emotionColorAnimal + " from " + userStar;
 }
 
+
 function setVisitorCount() {
+
+    // Parse JSON
+    let userStats = localStorage.getItem("ColorCalendar.eth");
+    let randomUser = JSON.parse(userStats);
 
     // Date object, time
     var localStorageTime = new Date();
     var pageCountTime = localStorageTime.getTime()
 
-    // local storage, last page visit time
-    var lastPageTime = localStorage.getItem("local-time");
-    localStorage.setItem('local-time', pageCountTime);
+    // local storage, over right time
+    var lastPageTime = localStorage.getItem('ColorCalendar.eth.lastdate');
+    localStorage.setItem('ColorCalendar.eth.lastdate', pageCountTime);
 
     //Add to counter
-    var currentPageView = localStorage.getItem("visitor-count");
+    var currentPageView = localStorage.getItem("ColorCalendar.eth.visits");
     var addAPageView = ++currentPageView;
-    localStorage.setItem('visitor-count', currentPageView);
+    localStorage.setItem('ColorCalendar.eth.visits', currentPageView);
 
     // Format so there are no decimal points
     var secondsSinceVisit = (pageCountTime - lastPageTime) / 1000;
     var secondsSinceVisitFixed = Number.parseFloat(secondsSinceVisit).toFixed(0);
     var minutesSinceVisit = Number.parseFloat(secondsSinceVisit / 60).toFixed(0);
 
-    // Format based on seconds, minutes
+    // Format grammar based on seconds, minutes
     var grammarForTime = "";
     if (secondsSinceVisitFixed < 2 && secondsSinceVisitFixed >= 1) {
         // the grammar is 1 second, not 1 seconds
-         grammarForTime= secondsSinceVisitFixed + " second";
-    } 
-   else if (secondsSinceVisitFixed < 60 || (secondsSinceVisitFixed > 0 && secondsSinceVisitFixed <1) ) {
-       grammarForTime= secondsSinceVisitFixed +  " seconds";
-    } 
-   else if (secondsSinceVisitFixed > 60 && secondsSinceVisitFixed < 120 ) {
-      grammarForTime= minutesSinceVisit + " minutes";
+        grammarForTime = secondsSinceVisitFixed + " second";
+    } else if (secondsSinceVisitFixed < 60 || (secondsSinceVisitFixed > 0 && secondsSinceVisitFixed < 1)) {
+        grammarForTime = secondsSinceVisitFixed + " seconds";
+    } else if (secondsSinceVisitFixed > 60 && secondsSinceVisitFixed < 120) {
+        grammarForTime = minutesSinceVisit + " minute";
+    } else if (secondsSinceVisitFixed >= 120) {
+        grammarForTime = minutesSinceVisit + " minutes";
     }
-   else if (secondsSinceVisitFixed >= 120 ) {
-      grammarForTime= minutesSinceVisit + " minutes";
-    }
-        
-// Display in browser
-document.getElementById('toolbar').textContent =
-            "Welcome back " + localStorage.getItem("user-name") +
-            ". This is visit number " + currentPageView +
-            ". It's been " +  grammarForTime +
-            " since lasting visiting us from " + localStorage.getItem("user-location");
+
+    // Display in browser
+    document.getElementById("toolbar").innerHTML =
+        "Welcome back " + randomUser.name + ". This is visit number " + currentPageView +
+        ". It's been " + grammarForTime + " since lasting visiting us from " + randomUser.location;
 }
