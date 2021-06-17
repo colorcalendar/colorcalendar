@@ -1,6 +1,4 @@
-// Calculates the date on the Color Calendar
-// Based on the current time of the Gregorian calendar
-// Last updated Year 5, Mars 33, Yellowday (Fri, June 11, 2021) 
+// Calculates the current date on the Color Calendar
 
 function getColorDate() {
 
@@ -21,6 +19,13 @@ function getColorDate() {
 						"Sun"
 					    ];
 
+    // A standard month has 35 days, or 36 days on leap years
+    // Every month is the same except Sun month
+    var monthLength = 35;
+    var secondsInDay = 86400;
+    var secondsInYear = secondsInDay * 365;
+    var secondsInLeapYear = secondsInDay * 366;
+
     // Initialize arrays and variables 
     var colorOfDayArray = [];
     var dayOfMonth = [];
@@ -30,24 +35,16 @@ function getColorDate() {
     var leapYear = 0;
     var colorYear = 0;
     var colorDay = 0;
-
-    // A standard month has 35 days, or 36 days on leap years
-    // Every month is the same except Sun month
-    var monthLength = 35;
-    var secondsInDay = 86400;
-    var secondsInYear = secondsInDay * 365;
-    var secondsInLeapYear = secondsInDay * 366;
     j = 0;
 
-    // Array for New Year epoch positions, 100 years ahead
-    for (var i = 0; i <= 99; i++) {
+    // Array for New Year epoch positions, 17 years ahead
+    // 17 years because of the 2038 problem
+    for (var i = 0; i <= 17; i++) {
         // Set starting position midnight Dec 21, 2016
-
         if (i === 0) {
             newYearEpochDate.push(dec21_2016);
             // Talley leap years
             isItLeapYear.push(1);
-
         } else if (i >= 1) {
             // Check for leap year and add to previous year position
             if (j > 2) {
@@ -60,7 +57,6 @@ function getColorDate() {
                 isItLeapYear.push(0);
                 j++;
             }
-
         }
     }
 
@@ -70,8 +66,8 @@ function getColorDate() {
     // Get current time, minus timezone offset, in seconds
     var timeRightNow = Math.floor((new Date).getTime() / 1000) - timezoneOffset;
 
-    // Get year, get day of year, up to 100 years ahead 
-    for (var i = 0; i <= 99; i++) {
+    // Get year, get day of year, up to 17 years ahead 
+    for (var i = 0; i <= 17; i++) {
         if (timeRightNow >= newYearEpochDate[i] && timeRightNow < newYearEpochDate[i + 1]) {
             // Plus 1 for array positioning
             colorYear = (i + 1);
