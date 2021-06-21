@@ -89,6 +89,7 @@ function setVisitorCount() {
     }
 
     // Display in browser
+// window.document.title = "hi";
     document.getElementById("toolbar").innerHTML =
         "Welcome back " + randomUser.name + ". This is visit number " + currentPageView +
         ". It's been " + grammarForTime + " since lasting visiting us from " + randomUser.location;
