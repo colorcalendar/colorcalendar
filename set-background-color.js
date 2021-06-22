@@ -1,5 +1,5 @@
 // Background color based on the Color Calendar day
-// Global varibles set in color-calendar.js
+// Global varibles set in color-calendar-date.js
 
 function setBackgroundColor() {
 
