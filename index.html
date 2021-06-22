@@ -1,16 +1,18 @@
-<!-- Color Calendar Year 5 -->
+<!-- ColorCalendar.eth -->
 <!doctype html>
 <meta charset=utf-8>
 <html lang=en>
-<head><link rel="stylesheet" href="non-leap-year.css">
+<head>
+<link rel="stylesheet" href="style.css">
+<!-- Calculate the date on the Color Calendar -->
+<script src="color-calendar-date.js" ></script>
 </head>
 <title>Color Calendar </title>
-<body  onload="getColorDate(); 
-			setBackgroundColor(); 
-			displayColorDate()">
-<script src="calendar-table.js"></script>
+<!-- Upon loading, set the background color of day, and display the date -->
+<body  onload="setBackgroundColor(); displayColorDate();">
+<!-- Display the calendar table, and the CSS style, based on the date -->
+<script src="display-calendar-table.js"></script>
 </body>
-<script src="color-calendar.js"></script>
 <script src="set-background-color.js"></script>
 <script src="display-color-date.js"></script>
 </html>
