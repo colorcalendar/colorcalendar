@@ -1,4 +1,4 @@
-// Displays Color Calendar date in div
+// Displays Color Calendar date in title div
 // Global varibles set in color-calendar-date.js
 
 function displayColorDate() {
@@ -9,7 +9,7 @@ function displayColorDate() {
     }
 
     // Check if the clock is set too far in the future
-    // Many clocks won't go more than the 2038 problem
+    // 17 years
     else if (timeRightNow > newYearEpochDate[17]) {
         document.getElementById("color-date").textContent = "Clock is set too far in the future";
     } 

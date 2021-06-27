@@ -1,4 +1,5 @@
 // Calculates the current date on the Color Calendar
+// var timeRightNow =1672443485;
 
 // The Color Calendar began midnight Decemeber 21, 2016 - in seconds
 const dec21_2016 = 1482278400;

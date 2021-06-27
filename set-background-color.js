@@ -1,46 +1,38 @@
-// Background color based on the Color Calendar day
-// Global varibles set in color-calendar-date.js
+// Background color based on day, and make day clickable
+// Global varibles set in color-calendar.js
 
 function setBackgroundColor() {
 
 	var currentNumber = window.colorMonthDay;
-
 	  // Set background color based on day color
 	    if (colorDay == "Redday") {
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="red";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="red";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }
 	    if (colorDay == "Orangeday") {
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="orange";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="orange";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }
 	    if (colorDay == "Yellowday") {
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="yellow";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="yellow";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }
 	    if (colorDay == "Greenday") {
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="green";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="green";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }
 	    if (colorDay == "Blueday") {
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="blue";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="blue";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }
 	    if (colorDay == "Violetday") {
-		//document.body.style.backgroundColor = "purple";
-		    elements = document.getElementsByClassName("d"+currentNumber);
-		    for (var i = 0; i < elements.length; i++) {
-			elements[i].bgColor="purple";
-		    }
+		elements = document.getElementById("d"+currentNumber);
+		elements.bgColor="purple";
+		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
 	    }   
 }

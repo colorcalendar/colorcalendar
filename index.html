@@ -4,15 +4,19 @@
 <html lang=en>
 <head>
 <link rel="stylesheet" href="style.css">
+
 <!-- Calculate the date on the Color Calendar -->
 <script src="color-calendar-date.js" ></script>
 </head>
 <title>Color Calendar </title>
-<!-- Upon loading, set the background color of day, and display the date -->
+
+<!-- Set the background color based on the day, and display the date in title -->
 <body  onload="setBackgroundColor(); displayColorDate();">
-<!-- Display the calendar table, and the CSS style, based on the date -->
+
+<!-- Display the calendar table, and load the CSS style, based on leap year or not -->
 <script src="display-calendar-table.js"></script>
 </body>
 <script src="set-background-color.js"></script>
 <script src="display-color-date.js"></script>
+<noscript>JavaScript is disabled. </noscript>
 </html>
