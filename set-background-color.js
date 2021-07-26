@@ -1,38 +1,51 @@
-// Background color based on day, and make day clickable
-// Global varibles set in color-calendar.js
+// Set the background color of the day, and format sun month
+import {leapYear,
+        nameOfMonth,
+        dayNumberMonth,
+        dayOfWeek} 
+  from "/color-calendar-date.js";
 
-function setBackgroundColor() {
+// Set background color based on Redday
+if (dayOfWeek === "Redday") {
+    document.getElementById("d" + dayNumberMonth).className = "redday";
+}
 
-	var currentNumber = window.colorMonthDay;
-	  // Set background color based on day color
-	    if (colorDay == "Redday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="red";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }
-	    if (colorDay == "Orangeday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="orange";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }
-	    if (colorDay == "Yellowday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="yellow";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }
-	    if (colorDay == "Greenday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="green";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }
-	    if (colorDay == "Blueday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="blue";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }
-	    if (colorDay == "Violetday") {
-		elements = document.getElementById("d"+currentNumber);
-		elements.bgColor="purple";
-		elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
-	    }   
+// Orangeday
+if (dayOfWeek === "Orangeday") {
+    document.getElementById("d" + dayNumberMonth).className = "orangeday";
+}
+
+// Yellowday
+if (dayOfWeek === "Yellowday") {
+    document.getElementById("d" + dayNumberMonth).className = "yellowday";
+}
+
+// Greenday
+if (dayOfWeek === "Greenday") {
+    document.getElementById("d" + dayNumberMonth).className = "greenday";
+}
+
+// Blueday
+if (dayOfWeek === "Blueday") {
+    document.getElementById("d" + dayNumberMonth).className = "blueday";
+}
+
+// Violetday
+if (dayOfWeek === "Violetday") {
+    document.getElementById("d" + dayNumberMonth).className = "violetday";
+    //elements.innerHTML = "<a href=" + "#" + ">" + currentNumber + "</a>";
+}
+
+// Sun month on leap year
+if (nameOfMonth === "Sun" && leapYear === 1) {
+    for (let i = 7; i <= 36; i++) {
+        document.getElementById("d" + i).className = "day-gray";
+    }
+}
+
+// Sun month on non leap year
+if (nameOfMonth === "Sun" && leapYear === 0) {
+    for (let i = 16; i <= 35; i++) {
+        document.getElementById("d" + i).className = "day-gray";
+    }
 }

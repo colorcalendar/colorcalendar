@@ -1,78 +1,88 @@
-// Calculates the current date on the Color Calendar
-// var timeRightNow =1672443485;
+// Calculates the current date on the Color Calendar (Chroma Celestial)
+export {
+    dayOfWeek,
+    nameOfMonth,
+    dayNumberMonth,
+    leapYear,
+    currentDayArray,
+    colorCalendarDate
+};
 
-// The Color Calendar began midnight Decemeber 21, 2016 - in seconds
-const dec21_2016 = 1482278400;
+const secondsInDay = 86400;
+const secondsInYear = secondsInDay * 365;
+const secondsInLeapYear = secondsInDay * 366;
 
-// There are 11 months in the Color Calendar 
-// (named after celestial objects in our solar system)
+// Years to calculate ahead
+const futureYears = 21;
+
+// There are 11 months on the Color Calendar
+// Months are named after the planets, moon and sun
 var colorMonthName = ["Mercury",
-    "Venus",
-    "Earth",
-    "Moon",
-    "Mars",
-    "Jupiter",
-    "Saturn",
-    "Uranus",
-    "Neptune",
-    "Pluto",
-    "Sun"
-];
+      "Venus",
+      "Earth",
+      "Moon",
+      "Mars",
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Pluto",
+      "Sun"];
 
-// A month has 35 days, except on a leap year when it has 36 days
 // Every month is the same format, only Sun month is different
+// Every month has 35 days, except on a leap year when it has 36 days
+// Sun month is 15 days on a regular year, 6 days on a leap year
 var monthLength = 35;
-var secondsInDay = 86400;
-var secondsInYear = secondsInDay * 365;
-var secondsInLeapYear = secondsInDay * 366;
 
-// Declare arrays and variables 
-var colorOfDayArray = [];
-var dayOfMonth = [];
-var monthOfYear = [];
-var newYearEpochDate = [];
+// Declare arrays and variables
+var currentDayArray = [];
+var dayOfMonthArray = [];
+var monthNameArray = [];
+var futureNewYears = [];
 var isItLeapYear = [];
-var leapYear = 0; // Used as boolian 
+var leapYear = 0; // Boolian, 0 no 1 yes
 var leapYearCount = 0;
-var colorYear = 0; 
-var colorDay = 0; 
+var colorYear = 0;
+var currentDay = 0;
 
-// Array for New Year epoch positions, 17 years ahead (2038 problem)
-// New years is Decemeber 21 on the Color Calendar
-for (var i = 0; i <= 17; i++) {
+// Get timezone offset, in seconds
+var timezoneOffset = (new Date().getTimezoneOffset()) * 60;
+
+//var timeNow = 1607998000; // for testing
+//var timeNow = 1639555600; // for testing
+var timeNow = Math.floor((new Date).getTime() / 1000) - timezoneOffset;
+
+// The Color Calendar began midnight Decemeber 21, 2016 UTC
+var startingDate = 1482278400;
+
+// Array for New Year epoch positions, in seconds
+// New years begin on Decemeber 21, not January 1
+for (let i = 0; i <= futureYears; i++) {
     // Set starting position midnight Dec 21, 2016
     if (i === 0) {
-        newYearEpochDate.push(dec21_2016);
-        // Talley leap years
-        isItLeapYear.push(1);
+        futureNewYears.push(startingDate);
+        isItLeapYear.push(1); // Talley leap years
     } else if (i >= 1) {
         // Check for leap year and add to previous year position
         if (leapYearCount > 2) {
-            newYearEpochDate.push(secondsInLeapYear + newYearEpochDate[i - 1]);
+            futureNewYears.push(secondsInLeapYear + futureNewYears[i - 1]);
             isItLeapYear.push(1);
-            // Reset leap year count 
-           leapYearCount = 0;
+            leapYearCount = 0; // Reset leap year count
         } else {
-            newYearEpochDate.push(secondsInYear + newYearEpochDate[i - 1]);
+            futureNewYears.push(secondsInYear + futureNewYears[i - 1]);
             isItLeapYear.push(0);
             leapYearCount++;
         }
     }
 }
 
-// Get timezone offset, in seconds
-var timezoneOffset = (new Date().getTimezoneOffset()) * 60;
-
-// Get current time, minus timezone offset, in seconds
-var timeRightNow = Math.floor((new Date).getTime() / 1000) - timezoneOffset;
-
-// Get year, get day of year, up to 17 years ahead 
-for (var i = 0; i <= 17; i++) {
-    if (timeRightNow >= newYearEpochDate[i] && timeRightNow < newYearEpochDate[i + 1]) {
-        // Plus 1 for array positioning
+// Get year, get day of year
+for (let i = 0; i <= futureYears; i++) {
+    if (timeNow >= futureNewYears[i] && timeNow < futureNewYears[i + 1]) {
+        // Plus 1 for array positioning, no year zero
         colorYear = (i + 1);
-        // Negative 1 for array positioning	
-        colorDay = Math.ceil(((timeRightNow - newYearEpochDate[i]) / secondsInDay) - 1);
+        // Negative 1 for array positioning, no day zero
+        currentDay = Math.ceil(((timeNow - futureNewYears[i]) / secondsInDay) - 1);
     }
 }
 
@@ -82,44 +92,45 @@ if (isItLeapYear[colorYear] > 0) {
 } else {
     leapYear = 0;
 }
-// Array for day names of the week
+
+// Array for days of the week
 if (leapYear === 0) {
     // Standard year has 5 day week
     for (var i = 0; i <= 364; i++) {
-        colorOfDayArray.push("Redday");
+        currentDayArray.push("Redday");
         i++;
-        colorOfDayArray.push("Orangeday");
+        currentDayArray.push("Orangeday");
         i++;
-        colorOfDayArray.push("Yellowday");
+        currentDayArray.push("Yellowday");
         i++;
-        colorOfDayArray.push("Greenday");
+        currentDayArray.push("Greenday");
         i++;
-        colorOfDayArray.push("Blueday");
+        currentDayArray.push("Blueday");
     }
 } else {
-    // Leap year has 6 day week 
+    // Leap year has 6 day week
     for (var i = 0; i <= 365; i++) {
-        colorOfDayArray.push("Redday");
+        currentDayArray.push("Redday");
         i++;
-        colorOfDayArray.push("Orangeday");
+        currentDayArray.push("Orangeday");
         i++;
-        colorOfDayArray.push("Yellowday");
+        currentDayArray.push("Yellowday");
         i++;
-        colorOfDayArray.push("Greenday");
+        currentDayArray.push("Greenday");
         i++;
-        colorOfDayArray.push("Blueday");
+        currentDayArray.push("Blueday");
         i++;
-        colorOfDayArray.push("Violetday");
+        currentDayArray.push("Violetday");
     }
 }
 
-// Array for numbers per month
+// Arrays for day numbers per month, and names of month
 if (leapYear === 0) {
-    var j = 1; //  j starts at day 1, instead day 0
-    var k = 0; // k tallys 11 months
+    let j = 1; //  j starts at day 1, instead day 0
+    let k = 0; // k tallys 11 months
     for (var i = 0; i <= 364; i++) {
-        dayOfMonth.push(j++); // 35 day month		
-        monthOfYear.push(colorMonthName[k]); // Month of year
+        dayOfMonthArray.push(j++); // 35 day month
+        monthNameArray.push(colorMonthName[k]); // Month of year
         if (j > 35) {
             j = 1;
             k++;
@@ -127,11 +138,11 @@ if (leapYear === 0) {
     }
 } else {
     // Day Numbers for 36 day month if leap year
-    var j = 1;
-    var k = 0;
+    let j = 1;
+    let k = 0;
     for (var i = 0; i <= 365; i++) {
-        dayOfMonth.push(j++);
-        monthOfYear.push(colorMonthName[k]);
+        dayOfMonthArray.push(j++);
+        monthNameArray.push(colorMonthName[k]);
         if (j > 36) {
             j = 1;
             k++;
@@ -139,12 +150,23 @@ if (leapYear === 0) {
     }
 }
 
-// Global varibles for year, month, day number, day color, time now, future years, time begin, leap year
-window.colorYear = colorYear;
-window.colorMonth = monthOfYear[colorDay];
-window.colorMonthDay = dayOfMonth[colorDay];
-window.colorDay = colorOfDayArray[colorDay];
-window.timeRightNow = timeRightNow;
-window.newYearEpochDate = newYearEpochDate;
-window.dec21_2016 = dec21_2016;
-window.leapYear = leapYear
+// Set varables from arrays
+var dayOfWeek = currentDayArray[currentDay];
+var finalDate = futureNewYears[futureYears];
+var dayNumberMonth = dayOfMonthArray[currentDay];
+var nameOfMonth = monthNameArray[currentDay];
+
+// Check if the clock is set before the starting date (dec 21, 2016)
+if (timeNow < startingDate) {
+    var colorCalendarDate = "Clock set too far in past";
+}
+
+// Check if the clock is set too far in the future
+else if (timeNow > finalDate) {
+    var colorCalendarDate = "Clock set too far in future";
+}
+
+// Set the current Color Calendar date
+else {
+  var colorCalendarDate  = dayOfWeek + ", " + nameOfMonth  +  " "  + dayNumberMonth + ", " + "Year " + colorYear;
+}

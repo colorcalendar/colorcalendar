@@ -1,23 +1,33 @@
-<!-- ColorCalendar.eth -->
+<!-- Color Calendar  -->
 <!doctype html>
 <meta charset=utf-8>
 <html lang=en>
 <head>
+<meta name="description" content="Color Calendar">
 <link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="favicon.png" />
 
-<!-- Calculate the date on the Color Calendar -->
-<script src="color-calendar-date.js" ></script>
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" href="/favicon-16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-152.png" sizes="152x152">
+
 </head>
+
 <title>Color Calendar </title>
 
-<!-- Set the background color based on the day, and display the date in title -->
-<body  onload="setBackgroundColor(); displayColorDate();">
-
-<!-- Display the calendar table, and load the CSS style, based on leap year or not -->
-<script src="display-calendar-table.js"></script>
+<!-- Calendar is dynamically generated -->
+<body>
+<div id="wrapper-div" class="wrapper">
+	<div id="calendar-div" class="calendar"></div>
+</div>
 </body>
-<script src="set-background-color.js"></script>
-<script src="display-color-date.js"></script>
-<noscript>JavaScript is disabled. </noscript>
+
+<!-- Display Color Calendar date, table, format, display Gregorian -->
+<script src="color-calendar-date.js" type="module"></script>
+<script src="display-calendar-table.js" type="module"></script>
+<script src="set-background-color.js" type="module"></script>
+<script src="gregorian-date.js" type="module"></script>
+
+<noscript>Cannot load. JavaScript is disabled. </noscript>
 </html>
