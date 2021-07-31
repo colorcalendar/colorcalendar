@@ -15,19 +15,22 @@
 </head>
 
 <title>Color Calendar </title>
-
-<!-- Calendar is dynamically generated -->
 <body>
-<div id="wrapper-div" class="wrapper">
-	<div id="calendar-div" class="calendar"></div>
-</div>
+	<div id="wrapper-div" class="wrapper">
+		<div id="calendar-div" class="calendar">
+			<!-- Calendar, dynamically generated here-->
+		</div>
+	</div>
 </body>
 
 <!-- Display Color Calendar date, table, format, display Gregorian -->
 <script src="color-calendar-date.js" type="module"></script>
-<script src="display-calendar-table.js" type="module"></script>
-<script src="set-background-color.js" type="module"></script>
 <script src="gregorian-date.js" type="module"></script>
+<script src="display-calendar-table.js" type="module"></script>
 
-<noscript>Cannot load. JavaScript is disabled. </noscript>
+<!-- Errors for nonmodule browsers and javascript disabled -->
+<noscript><h1>JavaScript disabled.</h1></noscript>
+<script nomodule> document.getElementById("calendar-div").innerHTML = "Browser not supported.";
+</script>
+
 </html>

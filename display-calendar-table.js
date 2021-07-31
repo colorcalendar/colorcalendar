@@ -1,312 +1,350 @@
-// Create and display the Color Calendar grid table
+// Create and display the calendar tables
 import {
     leapYear,
     currentDayArray,
+    nameOfMonth,
+    dayNumberMonth,
+    dayOfWeek,
     colorCalendarDate
 } from "/color-calendar-date.js";
 import {
-    gregorianDate
+    gregorianDate,
+    gregorianDayOfMonth,
+    monthPosition,
+    monthLength,
+    lastMonthLength,
+    gregorianDayOfWeek
 } from "/gregorian-date.js";
 
-// Check for leap year
-if (leapYear === 0) {
+// Varables for tables
+var tableRows = 1;
+var tableColumns = 1;
+var tableName = "";
+var tableClass = "";
+var cellName = "";
+var counter = 0;
+var defaultCalendar = "color";
+
+displayColorCalander();
+
+function displayColorCalander() {
     headerTable();
-    weekdaysNonLeap();
-    fiveBySevenGrid();
+    // Check for leap year
+    if (leapYear === 0) {
+        weekdaysTable();
+        grid5x7();
+    } else {
+        weekdaysTableLeap();
+        grid6x6();
+    };
     footerTable();
-} else {
-    headerTable();
-    weekdaysLeapYear();
-    sixBySixGrid();
-    footerTable();
-};
+    dayBackgroundColor();
+    resizeStage();
+}
 
-// Responsive layout based on windows size and orientation
-if (window.innerHeight < window.innerWidth) {
-    // Horizontal
-    document.getElementsByClassName("wrapper")[0].style.height = window.innerHeight + "px";
-    document.getElementsByClassName("wrapper")[0].style.width = window.innerWidth + "px";
-    document.getElementsByClassName("calendar")[0].style.height = window.innerHeight - 110 + "px";
-    document.getElementsByClassName("calendar")[0].style.width = "750px";
-    document.getElementsByClassName("header")[0].style.height = "20px";
-    document.getElementsByClassName("weekdays")[0].style.height = "20px";
-    document.getElementsByClassName("footer")[0].style.height = "20px";
-} else {
-    // Vertical
-    document.getElementsByClassName("wrapper")[0].style.height = window.innerHeight + "px";
-    document.getElementsByClassName("wrapper")[0].style.width = window.innerWidth + "px";
-    document.getElementsByClassName("calendar")[0].style.width = window.innerWidth + "px";
-    document.getElementsByClassName("calendar")[0].style.height = window.innerHeight / 1.25 + "px";
-    document.getElementsByClassName("header")[0].style.height = "110px";
-    document.getElementsByClassName("header")[0].style.fontSize = "3em";
-    document.getElementsByClassName("weekdays")[0].style.height = "100px";
-    document.getElementsByClassName("weekdays")[0].style.fontSize = "2.3em";
-    document.getElementsByClassName("footer")[0].style.height = "110px";
-    document.getElementsByClassName("footer")[0].style.fontSize = "2.3em";
-};
+function displayGregorianCalander() {
+    gregorianHeader();
+    weekdaysGregorian();
+    grid7x6();
+    gregorianFormat();
+    dayBackgroundColor();
+    gregorianFooter();
+    resizeStage();
+}
 
-// 5 x 7
-function fiveBySevenGrid() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "calendar-table");
-
-    // day count
-    var dayCount = 1;
-
-    // create cells
-    for (var j = 0; j < 7; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 5; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "d" + dayCount);
-            cellD.classList.add("day");
-            // create Text Node and add day number
-            var textNode = document.createTextNode(dayCount);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
+function dayBackgroundColor() {
+    if (defaultCalendar === "color") {
+        // Months start on 1 not 0
+        var n = dayNumberMonth - 1;
+    } else {
+        // Gregorian
+        var n = gregorianDayOfMonth + monthPosition - 1;
+    }
+    // Set background based on color
+    if (dayOfWeek === "Redday") {
+        document.getElementById("d" + n).className = "redday";
+    }
+    if (dayOfWeek === "Orangeday") {
+        document.getElementById("d" + n).className = "orangeday";
+    }
+    if (dayOfWeek === "Yellowday") {
+        document.getElementById("d" + n).className = "yellowday";
+    }
+    if (dayOfWeek === "Greenday") {
+        document.getElementById("d" + n).className = "greenday";
+    }
+    if (dayOfWeek === "Blueday") {
+        document.getElementById("d" + n).className = "blueday";
+    }
+    if (dayOfWeek === "Violetday") {
+        document.getElementById("d" + n).className = "violetday";
+    }
+    // Sun month on leap year
+    if (nameOfMonth === "Sun" && leapYear === 1) {
+        for (let i = 7; i <= 36; i++) {
+            document.getElementById("d" + i).className = "day-gray";
         }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
+    }
+    // Sun month on non leap year
+    if (nameOfMonth === "Sun" && leapYear === 0) {
+        for (let i = 16; i <= 35; i++) {
+            document.getElementById("d" + i).className = "day-gray";
+        }
+    }
+}
+
+// remove nodes
+function clearNodes() {
+    var id = ["#header-table",
+        "#weekdays-table",
+        "#calendar-table",
+        "#footer-table"
+    ];
+    // loop through array and remove
+    for (var i = 0; i < id.length; i++) {
+        var element = document.querySelector(id[i]);
+        element.remove();
+    }
+}
+
+function gregorianHeader() {
+    tableRows = 1;
+    tableColumns = 1;
+    tableName = "header-table";
+    tableClass = "header";
+    cellName = "header"; // name plus i++
+    renderTable();
+    //
+    var body = document.getElementById("header0");
+    var textNode = document.createTextNode(gregorianDate);
+    body.appendChild(textNode);
+}
+
+function weekdaysGregorian() {
+    tableRows = 1;
+    tableColumns = 7;
+    tableName = "weekdays-table";
+    tableClass = "weekdays";
+    cellName = "weekdays";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(gregorianDayOfWeek[i]);
+        body.appendChild(textNode);
+    }
+}
+
+function gregorianFormat() {
+    // main month, plus 1 for position, days start on 1 not 0
+    var startPlace = monthPosition;
+    for (var i = 0; i < monthLength; i++) {
+        document.getElementById("d" + startPlace).textContent = i + 1;
+        startPlace++;
     }
 
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute of mytable to 2;
-    gridTable.setAttribute("border", "1");
-
-};
-
-// 5 x 1
-function weekdaysNonLeap() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "calendar-days");
-    gridTable.classList.add("weekdays")
-
-    // day count
-    var dayCount = 0;
-
-    // create cells
-    for (var j = 0; j < 1; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 5; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "c" + dayCount);
-            cellD.classList.add("day-color");
-            // create Text Node and add day number
-            var textNode = document.createTextNode(currentDayArray[dayCount]);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
-        }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
+    // top row, fill from previous month
+    var remainTopRow = monthPosition - 1;
+    var topRowLength = lastMonthLength;
+    for (var i = remainTopRow; i >= 0; i--) {
+        document.getElementById("d" + remainTopRow).textContent = topRowLength;
+        document.getElementById("d" + remainTopRow).className = "day-gray";
+        remainTopRow--;
+        topRowLength--;
     }
 
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute
-    gridTable.setAttribute("border", "1");
-
-};
-
-// 6 x 1
-function weekdaysLeapYear() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "calendar-days");
-    gridTable.classList.add("weekdays")
-
-    // day count
-    var dayCount = 0;
-
-    // create cells
-    for (var j = 0; j < 1; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 6; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "c" + dayCount);
-            cellD.classList.add("day-color");
-            // create Text Node and add day number
-            var textNode = document.createTextNode(currentDayArray[dayCount]);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
-        }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
+    // bottom row
+    // 42 size is grid, but plus 1 for position
+    var remainingDays = 43 - monthLength - monthPosition;
+    var lastRow = monthPosition + monthLength;
+    // Days start on 1 not 0
+    for (var i = 1; i < remainingDays; i++) {
+        document.getElementById("d" + lastRow).textContent = i;
+        document.getElementById("d" + lastRow).className = "day-gray";
+        lastRow++;
     }
-
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute
-    gridTable.setAttribute("border", "1");
-
 };
 
-// 6 x 6
-function sixBySixGrid() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "calendar-table");
-
-    // day count
-    var dayCount = 1;
-
-    // create cells
-    for (var j = 0; j < 6; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 6; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "d" + dayCount);
-            cellD.classList.add("day");
-            // create Text Node and add day number
-            var textNode = document.createTextNode(dayCount);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
-        }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
-    }
-
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute of mytable to 2;
-    gridTable.setAttribute("border", "1");
+function gregorianFooter() {
+    tableRows = 1;
+    tableColumns = 1;
+    tableName = "footer-table";
+    tableClass = "footer";
+    cellName = "footer";
+    renderTable();
+    var body = document.getElementById("footer0");
+    // Create anchor element.
+    var a = document.createElement('a');
+    a.setAttribute("id", "footer-link");
+    a.title = "Click to change formats";
+    a.href = "#";
+    // create Text Node, add date
+    var textNode = document.createTextNode(colorCalendarDate);
+    a.appendChild(textNode);
+    body.appendChild(a);
+    // Add function to link
+    // Changes calendar from Color to standard Gregorian
+    document.getElementById("footer-link").onclick = function() {
+        clearNodes();
+        defaultCalendar = "color";
+        displayColorCalander();
+    };
 };
 
-// 1 x 1 header displaying Color Calandar date
 function headerTable() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "color-date");
-    gridTable.classList.add("header");
-
-    // day count
-    var dayCount = 0;
-
-    // create cells
-    for (var j = 0; j < 1; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 1; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "c" + dayCount);
-            cellD.classList.add("day-header");
-
-            // create Text Node and add Color Calendar date
-            var textNode = document.createTextNode(colorCalendarDate);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
-        }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
-    }
-
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute of mytable to 2;
-    gridTable.setAttribute("border", "1");
+    tableRows = 1;
+    tableColumns = 1;
+    tableName = "header-table";
+    tableClass = "header";
+    cellName = "header"; // name plus i++
+    renderTable();
+    //
+    var body = document.getElementById("header0");
+    var textNode = document.createTextNode(colorCalendarDate);
+    body.appendChild(textNode);
 };
 
-// 1 x 1 footer, gregorian date
+function weekdaysTable() {
+    tableRows = 1;
+    tableColumns = 5;
+    tableName = "weekdays-table";
+    tableClass = "weekdays";
+    cellName = "weekdays";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(currentDayArray[i]);
+        body.appendChild(textNode);
+    }
+};
+
+function weekdaysTableLeap() {
+    tableRows = 1;
+    tableColumns = 6;
+    tableName = "weekdays-table";
+    tableClass = "weekdays";
+    cellName = "weekdays";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(currentDayArray[i]);
+        body.appendChild(textNode);
+    }
+};
+
+function grid5x7() {
+    tableRows = 7;
+    tableColumns = 5;
+    tableName = "calendar-table";
+    tableClass = "day";
+    cellName = "d";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(i + 1);
+        body.appendChild(textNode);
+    }
+};
+
+function grid6x6() {
+    tableRows = 6;
+    tableColumns = 6;
+    tableName = "calendar-table";
+    tableClass = "day";
+    cellName = "d";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(i + 1);
+        body.appendChild(textNode);
+    }
+};
+
+function grid7x6() {
+    tableRows = 6;
+    tableColumns = 7;
+    tableName = "calendar-table";
+    tableClass = "day";
+    cellName = "d";
+    renderTable();
+    for (var i = 0; i < tableRows * tableColumns; i++) {
+        var body = document.getElementById(cellName + i);
+        var textNode = document.createTextNode(i + 1);
+        body.appendChild(textNode);
+    }
+};
+
 function footerTable() {
-    // reference for the body
-    var gridBody = document.getElementById("calendar-div");
-
-    // create <table> and <tbody> elements
-    var gridTable = document.createElement("table");
-    var gridTableBody = document.createElement("tbody");
-    gridTable.setAttribute("id", "gregorian-date");
-    gridTable.classList.add("footer");
-
-    // day count
-    var dayCount = 0;
-
-    // create cells
-    for (var j = 0; j < 1; j++) {
-        // create <tr> element
-        var cellR = document.createElement("tr");
-
-        for (var i = 0; i < 1; i++) {
-            // create <td> element
-            var cellD = document.createElement("td");
-            cellD.setAttribute("id", "c" + dayCount);
-            cellD.classList.add("day-footer");
-
-            // create Text Node and add Color Calendar date
-            var textNode = document.createTextNode(gregorianDate);
-            dayCount++;
-            // append Text Node to cell <td>
-            cellD.appendChild(textNode);
-            // append cell <td> to row <tr>
-            cellR.appendChild(cellD);
-        }
-        // appends row <tr> into <tbody>
-        gridTableBody.appendChild(cellR);
-    }
-    // append <tbody> to <table>
-    gridTable.appendChild(gridTableBody);
-    // append <table> to <body>
-    gridBody.appendChild(gridTable);
-    // sets the border attribute of mytable to 2;
-    gridTable.setAttribute("border", "1");
+    tableRows = 1;
+    tableColumns = 1;
+    tableName = "footer-table";
+    tableClass = "footer";
+    cellName = "footer";
+    renderTable();
+    var body = document.getElementById("footer0");
+    // Create anchor element.
+    var a = document.createElement('a');
+    a.setAttribute("id", "footer-link");
+    a.title = "Click to change formats";
+    a.href = "#";
+    // create Text Node, add date
+    var textNode = document.createTextNode(gregorianDate);
+    a.appendChild(textNode);
+    body.appendChild(a);
+    // Add function to link
+    // Changes calendar from Color to standard Gregorian
+    document.getElementById("footer-link").onclick = function() {
+        clearNodes();
+        defaultCalendar = "gregorian";
+        displayGregorianCalander();
+    };
 };
+
+// table builder
+function renderTable() {
+    var body = document.getElementById("calendar-div"); //parent node
+    var counter = 0; //counter
+    var table = document.createElement("table"); // create <table>
+    var tbody = document.createElement("tbody"); // create <tbody>
+    table.setAttribute("id", tableName); // attach ID
+    //table.classList.add(tableClass) // attach Class
+    for (var j = 0; j < tableRows; j++) {
+        var tr = document.createElement("tr"); // create <tr> element
+        for (var i = 0; i < tableColumns; i++) {
+            var td = document.createElement("td"); // create <td> element
+            td.setAttribute("id", cellName + counter); // attach ID
+            td.classList.add(tableClass); // attach Class
+            tr.appendChild(td); // append cell <td> to row <tr>
+            counter++;
+        }
+        tbody.appendChild(tr); // append <tr> to <tbody>
+    }
+    table.appendChild(tbody); // append <tbody> to <table>
+    table.setAttribute("border", "1"); // sets the border attribute
+    body.appendChild(table); // append <table> to <parent>
+};
+
+function resizeStage() {
+    // Responsive layout based on windows size and orientation, not perfect but good enough
+    if (window.innerHeight < window.innerWidth) {
+        // Horizontal
+        document.getElementsByClassName("wrapper")[0].style.height = window.innerHeight + "px";
+        document.getElementsByClassName("wrapper")[0].style.width = window.innerWidth + "px";
+        document.getElementsByClassName("calendar")[0].style.height = window.innerHeight - 110 + "px";
+        document.getElementsByClassName("calendar")[0].style.width = "750px";
+        document.getElementById("header-table").style.height = "20px";
+        document.getElementById("weekdays-table").style.height = "20px";
+        document.getElementById("footer-table").style.height = "20px";
+    } else {
+        // Vertical
+        document.getElementsByClassName("wrapper")[0].style.height = window.innerHeight + "px";
+        document.getElementsByClassName("wrapper")[0].style.width = window.innerWidth + "px";
+        document.getElementsByClassName("calendar")[0].style.width = window.innerWidth + "px";
+        document.getElementsByClassName("calendar")[0].style.height = window.innerHeight / 1.25 + "px";
+        document.getElementById("header-table").style.height = "20px";
+        document.getElementById("header-table").style.fontSize = "3em";
+        document.getElementById("weekdays-table").style.height = "20px";
+        document.getElementById("weekdays-table").style.fontSize = "2.3em";
+        document.getElementById("footer-table").style.height = "20px";
+        document.getElementById("footer-table").style.fontSize = "2.3em";
+    };
+}

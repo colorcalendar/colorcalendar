@@ -11,9 +11,7 @@ export {
 const secondsInDay = 86400;
 const secondsInYear = secondsInDay * 365;
 const secondsInLeapYear = secondsInDay * 366;
-
-// Years to calculate ahead
-const futureYears = 21;
+const futureYears = 21; // Years to calculate ahead
 
 // There are 11 months on the Color Calendar
 // Months are named after the planets, moon and sun
@@ -29,9 +27,9 @@ var colorMonthName = ["Mercury",
       "Pluto",
       "Sun"];
 
-// Every month is the same format, only Sun month is different
-// Every month has 35 days, except on a leap year when it has 36 days
-// Sun month is 15 days on a regular year, 6 days on a leap year
+/* Only Sun month is different
+Each month has 35 days, on a leap year each month has 36 days
+Sun month has 15 days, on a leap year Sun month has 6 days */
 var monthLength = 35;
 
 // Declare arrays and variables
