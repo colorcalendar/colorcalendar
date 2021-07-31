@@ -343,7 +343,7 @@ function resizeStage() {
         document.getElementById("header-table").style.height = "20px";
         document.getElementById("header-table").style.fontSize = "3em";
         document.getElementById("weekdays-table").style.height = "20px";
-        document.getElementById("weekdays-table").style.fontSize = "2.3em";
+        document.getElementById("weekdays-table").style.fontSize = "2em";
         document.getElementById("footer-table").style.height = "20px";
         document.getElementById("footer-table").style.fontSize = "2.3em";
     };
