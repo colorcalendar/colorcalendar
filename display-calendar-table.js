@@ -29,13 +29,6 @@ var defaultCalendar = "color";
 
 displayColorCalander();
 
-//console.log(gregorianWeekdays);
-//function abbreviatedWeekdays() {
-  //
-//}
-
-
-
 function displayColorCalander() {
     headerTable();
     // Check for leap year
