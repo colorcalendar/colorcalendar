@@ -5,6 +5,7 @@ import {
     nameOfMonth,
     dayNumberMonth,
     dayOfWeek,
+    shortDayNames,
     colorCalendarDate
 } from "/color-calendar-date.js";
 import {
@@ -13,7 +14,8 @@ import {
     monthPosition,
     monthLength,
     lastMonthLength,
-    gregorianDayOfWeek
+    gregorianWeekdays,
+    shortWeekdays
 } from "/gregorian-date.js";
 
 // Varables for tables
@@ -26,6 +28,13 @@ var counter = 0;
 var defaultCalendar = "color";
 
 displayColorCalander();
+
+//console.log(gregorianWeekdays);
+//function abbreviatedWeekdays() {
+  //
+//}
+
+
 
 function displayColorCalander() {
     headerTable();
@@ -129,7 +138,14 @@ function weekdaysGregorian() {
     renderTable();
     for (var i = 0; i < tableRows * tableColumns; i++) {
         var body = document.getElementById(cellName + i);
-        var textNode = document.createTextNode(gregorianDayOfWeek[i]);
+        // Abbreviate the weekdays if vertical, Monday is MON, etc..
+        if (window.innerHeight < window.innerWidth) {
+            //horizontal
+            var textNode = document.createTextNode(gregorianWeekdays[i]);
+        } else {
+          //vertical
+            var textNode = document.createTextNode(shortWeekdays[i]);
+        };
         body.appendChild(textNode);
     }
 }
@@ -212,7 +228,14 @@ function weekdaysTable() {
     renderTable();
     for (var i = 0; i < tableRows * tableColumns; i++) {
         var body = document.getElementById(cellName + i);
-        var textNode = document.createTextNode(currentDayArray[i]);
+        // Abbreviate if vertical, Redday is RED, etc..
+        if (window.innerHeight < window.innerWidth) {
+            //horizontal
+            var textNode = document.createTextNode(currentDayArray[i]);
+        } else {
+          //vertical
+            var textNode = document.createTextNode(shortDayNames[i]);
+        };
         body.appendChild(textNode);
     }
 };
@@ -343,7 +366,7 @@ function resizeStage() {
         document.getElementById("header-table").style.height = "20px";
         document.getElementById("header-table").style.fontSize = "3em";
         document.getElementById("weekdays-table").style.height = "20px";
-        document.getElementById("weekdays-table").style.fontSize = "2em";
+        document.getElementById("weekdays-table").style.fontSize = "1.5em";
         document.getElementById("footer-table").style.height = "20px";
         document.getElementById("footer-table").style.fontSize = "2.3em";
     };

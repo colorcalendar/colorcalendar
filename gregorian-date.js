@@ -5,17 +5,27 @@ export {
     monthPosition,
     monthLength,
     lastMonthLength,
-    gregorianDayOfWeek
+    gregorianWeekdays,
+    shortWeekdays
 };
 
-// Arrays for days and month of Gregorian calendar
-let gregorianDayOfWeek = ["Sunday",//0
+// Arrays for Gregorian calendar
+let gregorianWeekdays = ["Sunday",//0
     "Monday",//1
     "Tuesday",//2
     "Wednesday",//3
     "Thursday",//4
     "Friday",//5
     "Saturday"//6
+];
+
+let shortWeekdays = ["SUN",
+    "MON",
+    "TUE",
+    "WED",
+    "THU",
+    "FRI",
+    "SAT"
 ];
 
 let gregorianMonthOfYear = ["January",
@@ -41,7 +51,7 @@ var gregorianMonth = g.getMonth();
 var gregorianString = g.toString();
 
 // Format like this: Friday, September 8, 2017
-var gregorianDate = gregorianDayOfWeek[gregorianDay] +
+var gregorianDate = gregorianWeekdays[gregorianDay] +
     ", " + gregorianMonthOfYear[gregorianMonth] +
     " " + gregorianDayOfMonth +
     ", " + gregorianYear;

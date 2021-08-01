@@ -5,6 +5,7 @@ export {
     dayNumberMonth,
     leapYear,
     currentDayArray,
+    shortDayNames,
     colorCalendarDate
 };
 
@@ -12,6 +13,16 @@ const secondsInDay = 86400;
 const secondsInYear = secondsInDay * 365;
 const secondsInLeapYear = secondsInDay * 366;
 const futureYears = 21; // Years to calculate ahead
+
+// Normal years have a 5 day week. A leap year has a 6 day week.
+// Days are named after colors on the visible light spectrum
+var shortDayNames = ["RED",
+      "ORANGE",
+      "YELLOW",
+      "GREEN",
+      "BLUE",
+      "VIOLET"
+];
 
 // There are 11 months on the Color Calendar
 // Months are named after the planets, moon and sun
@@ -28,7 +39,7 @@ var colorMonthName = ["Mercury",
       "Sun"];
 
 /* Only Sun month is different
-Each month has 35 days, on a leap year each month has 36 days
+Normal years have a 35 day month. A leap year has a 36 day month
 Sun month has 15 days, on a leap year Sun month has 6 days */
 var monthLength = 35;
 

@@ -1,11 +1,26 @@
 /* Style for Color Calendar, all years (leap years and non-leap years) */
+@font-face {
+    font-family: 'robotoregular';
+    src: url('roboto-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'robotoblack';
+    src: url('roboto-black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 body {
     margin: 0;
     padding: 0;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.5em;
+    font-family: robotoregular, Arial, Helvetica, sans-serif;
+    font-size: 1em;
     width: 100%;
     height: 100%;
     background: #fff;
@@ -17,7 +32,7 @@ table {
     height: 100%;
     margin: 5px auto;
     border-collapse: collapse;
-    background: WhiteSmoke;
+    border-radius: 5px;
     table-layout: fixed;
 }
 
@@ -27,7 +42,7 @@ td {
 }
 
 a {
-    color: red;
+    color: gray;
     display: block;
 }
 
@@ -36,75 +51,78 @@ div {
 }
 
 .wrapper {
-    width: 750px;
-    background: WhiteSmoke;
+    	width: 750px;
+    	background: WhiteSmoke;
 }
 
-.calendar-div {
-    height: 15px;
+#calendar-div {
+  	background: WhiteSmoke;
 }
 
+#header0 {
+	background: WhiteSmoke;
+}
+
+.header {
+	font-family: robotoregular, sans-serif;
+	font-size: 1.2em;
+	border-radius: 25px;
+}
+.weekdays {
+    font-family: robotoregular, sans-serif;
+    font-size: 1em;
+
+}
 .day {
+    font-family: robotoblack, sans-serif;
     background: #fff;
     color: black;
     text-align: center;
     font-size: 2em;
+    table-layout: fixed;
 }
 
-.day-color {
+.day-gray {
+  font-family: robotoblack, sans-serif;
     background: #fff;
-    color: black;
+    color: gray;
+    font-size: 2em;
     text-align: center;
-    font-size: 0.6em;
 }
-
 .redday {
     background: red;
     color: black;
     text-align: center;
-    font-size: 2em;
 }
 
 .orangeday {
     background: orange;
     color: black;
     text-align: center;
-    font-size: 2em;
 }
 
 .yellowday {
     background: yellow;
     color: black;
     text-align: center;
-    font-size: 2em;
 }
 
 .greenday {
     background: green;
     color: black;
     text-align: center;
-    font-size: 2em;
 }
 
 .blueday {
     background: blue;
     color: black;
     text-align: center;
-    font-size: 2em;
 }
 
 .violetday {
-    background: purple;
+    background: blueviolet;
     color: black;
     text-align: center;
-    font-size: 2em;
-}
-
-.day-gray {
-    background: #fff;
-    color: gray;
-    text-align: center;
-    font-size: 2em;
 }
 
 .day-names {
@@ -114,10 +132,4 @@ div {
 .week {
     font-size: 1.1em;
     font-weight: bold;
-}
-.weekdays {
-    font-size: 0.7em;
-}
-#error-div {
-  visibility: hidden;
 }
