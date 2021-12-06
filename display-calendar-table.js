@@ -83,13 +83,13 @@ function dayBackgroundColor() {
     }
     // Sun month on leap year
     if (nameOfMonth === "Sun" && leapYear === 1) {
-        for (let i = 7; i <= 36; i++) {
+        for (let i = 6; i <= 35; i++) {
             document.getElementById("d" + i).className = "day-gray";
         }
     }
     // Sun month on non leap year
     if (nameOfMonth === "Sun" && leapYear === 0) {
-        for (let i = 16; i <= 35; i++) {
+        for (let i = 15; i <= 34; i++) {
             document.getElementById("d" + i).className = "day-gray";
         }
     }
