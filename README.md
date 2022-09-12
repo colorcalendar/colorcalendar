@@ -1,1 +1,1 @@
-Last update - Year 6, Earth 27, Orangeday
+Last update: Redday, Uranus 21, Year 6 (Mon Sept 12, 2022)
