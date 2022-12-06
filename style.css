@@ -20,7 +20,7 @@ body {
     padding: 0;
     text-align: center;
     font-family: robotoregular, Arial, Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: 1.3em;
     width: 100%;
     height: 100%;
     background: #fff;
@@ -65,12 +65,12 @@ div {
 
 .header {
 	font-family: robotoregular, sans-serif;
-	font-size: 1.2em;
+	font-size: 1em;
 	border-radius: 25px;
 }
 .weekdays {
     font-family: robotoregular, sans-serif;
-    font-size: 1em;
+    font-size: 0.7em;
 
 }
 .day {
@@ -78,7 +78,7 @@ div {
     background: #fff;
     color: black;
     text-align: center;
-    font-size: 2em;
+    font-size: 1em;
     table-layout: fixed;
 }
 
@@ -86,7 +86,7 @@ div {
   font-family: robotoblack, sans-serif;
     background: #fff;
     color: gray;
-    font-size: 2em;
+    font-size: 1em;
     text-align: center;
 }
 .redday {
