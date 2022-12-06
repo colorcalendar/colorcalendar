@@ -1,1 +1,1 @@
-Last update: Redday, Uranus 21, Year 6 (Mon Sept 12, 2022)
+Last updated: Blueday, Pluto 35, Year 6 (Mon, Dec 6, 2022)
